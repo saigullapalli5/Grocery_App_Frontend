@@ -1,0 +1,47 @@
+
+
+
+.dashboard-bg {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  min-height: 100vh;
+}
+
+/* Card enhancements */
+.dashboard-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  padding: 15px;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Title styling */
+.dashboard-card .card-title {
+  font-size: 1.25rem;
+  color: #495057;
+}
+
+/* Text styling for counts */
+.dashboard-card .card-text {
+  font-size: 2rem;
+}
+
+/* Button hover */
+.dashboard-card .btn {
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card .btn:hover {
+  transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .dashboard-card .card-text {
+    font-size: 1.5rem;
+  }
+}  
