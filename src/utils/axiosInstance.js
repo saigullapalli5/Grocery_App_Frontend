@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5100/api", // your backend base URL
+  baseURL: "https://grocery-app-b-jwcs.onrender.com", // your backend base URL
   withCredentials: true, // include cookies automatically
 });
 
