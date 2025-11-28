@@ -159,9 +159,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ProductItem from "../ProductItem";
+import axiosInstance from "../../utils/axiosInstance";
 
-// Using native fetch; no external HTTP client needed
-const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:5100";
+// Using axiosInstance for API calls
 
 // Friendly, ordered defaults for grocery categories
 const DEFAULT_CATEGORY_OPTIONS = [
@@ -260,7 +260,6 @@ const CarouselWrapper = styled.div`
 `;
 
 const Products = () => {
-  const api = "http://localhost:5100/api/products/getAllProducts";
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -273,22 +272,20 @@ const Products = () => {
   // Load products and categories from backend
   useEffect(() => {
     // Products
-    fetch(`${API_BASE}/api/products/getAllProducts`, {
-      credentials: "include",
-    })
-      .then((r) => (r.ok ? r.json() : Promise.reject(r)))
-      .then((data) =>
-        Array.isArray(data) ? setProducts(data) : setProducts([])
-      )
+    axiosInstance
+      .get("/products/getAllProducts")
+      .then(({ data }) => {
+        setProducts(Array.isArray(data) ? data : []);
+      })
       .catch((err) => {
-        if (err && err.status === 401) return; // ignore unauthorized in UI
+        if (err?.response?.status === 401) return; // ignore unauthorized in UI
         console.warn("Products fetch failed:", err);
       });
 
     // Categories
-    fetch(`${API_BASE}/api/categories/allCategories`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(r)))
-      .then((cats) => setCategories(Array.isArray(cats) ? cats : []))
+    axiosInstance
+      .get("/categories/allCategories")
+      .then(({ data }) => setCategories(Array.isArray(data) ? data : []))
       .catch((err) => console.warn("Categories fetch failed:", err));
   }, []);
 

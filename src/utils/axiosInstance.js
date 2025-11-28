@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "https://grocery-app-b-jwcs.onrender.com", // your backend base URL
+  baseURL: "https://grocery-app-b-jwcs.onrender.com/api", // your backend base URL with /api prefix
   withCredentials: true, // include cookies automatically
 });
 
@@ -34,14 +34,24 @@ axiosInstance.interceptors.response.use(
       window.__handling401 = true;
 
       // Show popup
-      try { window.alert("Your session has expired or is invalid. Please log in again."); } catch (_) {}
+      try {
+        window.alert(
+          "Your session has expired or is invalid. Please log in again."
+        );
+      } catch (_) {}
       // Redirect to login if not already there (do not mutate cookies or header state here)
       const path = window.location?.pathname || "";
       if (path !== "/login" && path !== "/alogin") {
-        try { window.location.replace("/login"); } catch (_) {}
+        try {
+          window.location.replace("/login");
+        } catch (_) {}
       }
       // Release flag after navigation attempt
-      setTimeout(() => { try { delete window.__handling401; } catch(_){} }, 0);
+      setTimeout(() => {
+        try {
+          delete window.__handling401;
+        } catch (_) {}
+      }, 0);
     }
     return Promise.reject(error);
   }

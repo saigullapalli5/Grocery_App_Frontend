@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import axiosInstance from "../../utils/axiosInstance";
+import axios from "axios";
+import styled from "styled-components";
 
 // Styled components
 const Container = styled.div`
@@ -83,8 +84,8 @@ const Button = styled.button`
 
 const AddCategory = () => {
   const [formData, setFormData] = useState({
-    category: '',
-    description: '',
+    category: "",
+    description: "",
   });
 
   const { category, description } = formData;
@@ -98,23 +99,22 @@ const AddCategory = () => {
 
     try {
       if (!category) {
-        return alert('Category is required');
+        return alert("Category is required");
       }
 
-      const response = await axios.post('http://localhost:5100/api/categories/createCategory', {
+      const response = await axiosInstance.post("/categories/createCategory", {
         category,
         description,
       });
 
-      console.log('Category added:', response.data);
+      console.log("Category added:", response.data);
 
       setFormData({
-        category: '',
-        description: '',
+        category: "",
+        description: "",
       });
-
     } catch (error) {
-      console.error('Error adding category:', error);
+      console.error("Error adding category:", error);
     }
   };
 

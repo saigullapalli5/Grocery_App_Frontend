@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import axiosInstance from "../utils/axiosInstance";
+import axios from "axios";
 
 const UserProtected = ({ children }) => {
   const [verified, setVerified] = useState(null);
@@ -8,7 +8,11 @@ const UserProtected = ({ children }) => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        await axiosInstance.get("http://localhost:5100/token/userVerify", { withCredentials: true });
+        // The backend route is mounted at /token, not /api/token
+        await axios.get(
+          "https://grocery-app-b-jwcs.onrender.com/token/userVerify",
+          { withCredentials: true }
+        );
         setVerified(true);
       } catch {
         setVerified(false);

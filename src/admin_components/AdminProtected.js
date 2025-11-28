@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import axiosInstance from "../utils/axiosInstance";
+import axios from "axios";
 
 const AdminProtected = ({ children }) => {
   const [verified, setVerified] = useState(null);
@@ -8,9 +8,13 @@ const AdminProtected = ({ children }) => {
   useEffect(() => {
     const verifyAdmin = async () => {
       try {
-        await axiosInstance.get("http://localhost:5100/token/adminVerify", { withCredentials: true });
+        // The backend route is mounted at /token, not /api/token
+        await axios.get(
+          "https://grocery-app-b-jwcs.onrender.com/token/adminVerify",
+          { withCredentials: true }
+        );
         setVerified(true);
-      } catch {    
+      } catch {
         setVerified(false);
       }
     };

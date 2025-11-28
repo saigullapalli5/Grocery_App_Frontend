@@ -16,7 +16,6 @@ const GROCERY_BG =
 function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  
 
   const token = Cookies.get("userJwtToken");
   const adminJwt = Cookies.get("adminJwtToken");
@@ -50,19 +49,24 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axiosInstance.post("/auth/login", credentials);
-     
 
       if (res.status === 200) {
         const user = res.data.user;
 
         // 1) Persist user markers first so guards can read them
-        try { localStorage.setItem("user", JSON.stringify(user)); } catch(_) {}
+        try {
+          localStorage.setItem("user", JSON.stringify(user));
+        } catch (_) {}
         if (user?._id) {
-          try { localStorage.setItem("userId", user._id); } catch(_) {}
+          try {
+            localStorage.setItem("userId", user._id);
+          } catch (_) {}
         }
 
         // 2) Notify other tabs (optional)
-        try { localStorage.setItem("authUpdate", String(Date.now())); } catch(_) {}
+        try {
+          localStorage.setItem("authUpdate", String(Date.now()));
+        } catch (_) {}
 
         // 3) Navigate based on role
         if (user.role === "user") {
@@ -122,6 +126,9 @@ function Login() {
                         onChange={handleChange}
                         required
                         className="rounded-3 py-2"
+                        autoComplete={
+                          name === "password" ? "current-password" : "username"
+                        }
                       />
                     </Form.Group>
                   ))}
@@ -150,5 +157,3 @@ function Login() {
 }
 
 export default Login;
-
-

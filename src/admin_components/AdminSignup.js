@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 const AdminRegistration = () => {
   const [formData, setFormData] = useState({
@@ -20,10 +20,7 @@ const AdminRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:5100/api/admin/register", // <-- use your backend URL
-        formData
-      );
+      const { data } = await axiosInstance.post("/admin/register", formData);
       console.log("Admin registration successful:", data);
       alert("Admin registration successful");
       navigate("/admin/login");
