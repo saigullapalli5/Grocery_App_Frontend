@@ -23,7 +23,7 @@ const AdminRegistration = () => {
       const { data } = await axiosInstance.post("/admin/register", formData);
       console.log("Admin registration successful:", data);
       alert("Admin registration successful");
-      navigate("/admin/login");
+      navigate("/alogin");
     } catch (error) {
       console.error("Error during admin registration:", error);
       alert("Error during admin registration");
